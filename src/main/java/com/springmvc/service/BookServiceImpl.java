@@ -9,13 +9,21 @@ import com.springmvc.domain.Book;
 import com.springmvc.repository.BookRepository;
 
 @Service
-public class BookServiceImp1 implements BookService {
+public class BookServiceImpl implements BookService {
+	
 	@Autowired
 	private BookRepository bookRepository;
 
+	@Override
 	public List<Book> getAllBookList() {
-		// 저장된 도서 목록 정보 가져오기
+		// TODO Auto-generated method stub
 		return bookRepository.getAllBookList();
+	}
+	
+	public List<Book> getBookListByCategory(String category){
+		List<Book> booksByCategory = bookRepository.getBookListByCategory(category);
+		
+		return booksByCategory;
 	}
 
 }

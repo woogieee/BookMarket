@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.springmvc.domain.Book;
 
 @Repository
-public class BookRepositoryImp1 implements BookRepository {
+public class BookRepositoryImpl implements BookRepository {
+
+private List<Book> listOfBooks = new ArrayList<Book>();
 	
-	private List<Book> listOfBooks = new ArrayList<Book>();
-	
-	public BookRepositoryImp1() {
+	public BookRepositoryImpl() {
 		Book book1 = new Book("ISBN1234", "C# 교과서", 30000);
 		book1.setAuthor("박용준");
 		book1.setDescription(
@@ -47,6 +47,20 @@ public class BookRepositoryImp1 implements BookRepository {
 	public List<Book> getAllBookList() {
 		// TODO Auto-generated method stub
 		return listOfBooks;
+	}
+	
+	public List<Book> getBookListByCategory(String category){
+		List<Book> booksByCategory = new ArrayList<Book>();
+		
+		for(int i = 0; i < listOfBooks.size(); i++) {
+			Book book = listOfBooks.get(i);
+			
+			if(category.equalsIgnoreCase(book.getCategory()))
+				booksByCategory.add(book);
+			//대소문자 관계없이 매개변수 category와 도서 분야가 일치하는 도서목록 i번째의 도서 정보를 booksByCategory에 저장
+		}
+		
+		return booksByCategory;
 	}
 
 }
