@@ -1,7 +1,11 @@
 package com.springmvc.repository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.stereotype.Repository;
 import com.springmvc.domain.Book;
 
@@ -60,6 +64,41 @@ private List<Book> listOfBooks = new ArrayList<Book>();
 			//대소문자 관계없이 매개변수 category와 도서 분야가 일치하는 도서목록 i번째의 도서 정보를 booksByCategory에 저장
 		}
 		
+		return booksByCategory;
+	}
+	
+	public Set<Book> getBookListByFilter(Map<String, List<String>> filter){
+		Set<Book> booksByPublisher = new HashSet<Book>();
+		Set<Book> booksByCategory = new HashSet<Book>();
+		
+		Set<String> booksByFilter = filter.keySet();
+		
+		if(booksByFilter.contains("publisher")) {
+			//매트릭스 변수 중 publisher를 포함하는 경우에 실행
+			for(int j = 0; j < filter.get("publisher").size(); j++) {
+				String publisherName = filter.get("publisher").get(j);
+				for(int i = 0; i < listOfBooks.size(); i++) {
+					Book book = listOfBooks.get(i);
+					
+					if(publisherName.equalsIgnoreCase(book.getPublisher()))
+						booksByPublisher.add(book);
+				}
+			}
+			//전체 도서 목록 중에서 publisher 필드 값과 일치하는 도서를 검색하여 booksByPublisher 객체에 등록
+		}
+		
+		if(booksByFilter.contains("category")) {
+			//매트릭스 변수 중 category를 포함하는 경우에 실행
+			for(int i = 0; i < filter.get("category").size(); i++) {
+				String category = filter.get("category").get(i);
+				List<Book> list = getBookListByCategory(category);
+				booksByCategory.addAll(list);
+			}
+			//전체 도서 목록 중 category 값과 일치하는 도서를 검색하여 booksByCategory 객체에 등록
+		}
+		
+		booksByCategory.retainAll(booksByPublisher);
+		//booksByCategory 객체에 등록된 도서와 booksByPublisher에 등록된 도서 목록 중 중복되는 도서만 남기고 나머지는 삭제 후 booksByCategory 객체로 반환
 		return booksByCategory;
 	}
 

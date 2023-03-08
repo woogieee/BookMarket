@@ -1,6 +1,8 @@
 package com.springmvc.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,12 @@ public class BookServiceImpl implements BookService {
 		List<Book> booksByCategory = bookRepository.getBookListByCategory(category);
 		
 		return booksByCategory;
+	}
+	
+	public Set<Book> getBookListByFilter(Map<String, List<String>> filter){
+		Set<Book> booksByFilter = bookRepository.getBookListByFilter(filter);
+		
+		return booksByFilter;
 	}
 
 }
