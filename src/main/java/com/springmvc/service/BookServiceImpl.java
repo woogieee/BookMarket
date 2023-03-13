@@ -33,5 +33,11 @@ public class BookServiceImpl implements BookService {
 		
 		return booksByFilter;
 	}
+	
+	public Book getBookById(String bookId) {
+		Book bookById = bookRepository.getBookById(bookId);
+		
+		return bookById;
+	}
 
 }

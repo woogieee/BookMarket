@@ -101,5 +101,19 @@ private List<Book> listOfBooks = new ArrayList<Book>();
 		//booksByCategory 객체에 등록된 도서와 booksByPublisher에 등록된 도서 목록 중 중복되는 도서만 남기고 나머지는 삭제 후 booksByCategory 객체로 반환
 		return booksByCategory;
 	}
+	
+	public Book getBookById(String bookId) {
+		Book bookInfo = null;
+		for(int i = 0; i < listOfBooks.size(); i++) {
+			Book book = listOfBooks.get(i);
+			if(book != null && book.getBookId() != null && book.getBookId().equals(bookId)) {
+				bookInfo = book;
+				break;
+			}
+		}
+		if(bookInfo == null)
+			throw new IllegalArgumentException("도서 ID가 " + bookId + "인 해당 도서를 찾을 수 없습니다.");
+		return bookInfo;
+	}
 
 }

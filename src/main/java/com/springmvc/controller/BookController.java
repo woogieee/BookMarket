@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springmvc.domain.Book;
@@ -48,11 +49,19 @@ public class BookController {
 		return "books";
 	}
 	
-	@GetMapping("/filter/{bookFilter}")
+	@GetMapping("/filter/{bookFilter}")	//매트릭스 변수 사용, 매트릭스 변수 = 값
 	public String requestBooksByFilter(@MatrixVariable(pathVar="bookFilter") Map<String, List<String>> bookFilter, Model model) {
 		Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
 		model.addAttribute("bookList", booksByFilter);
 		return "books";
+	}
+	
+	@GetMapping("/book")
+	public String requestBookById(@RequestParam("id") String bookId, Model model) {
+		//메서드에서 요청 파라미터 id를 bookId로 재정의
+		Book bookById = bookService.getBookById(bookId);
+		model.addAttribute("book", bookById);
+		return "book";
 	}
 
 }
