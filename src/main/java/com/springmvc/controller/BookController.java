@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +64,26 @@ public class BookController {
 		Book bookById = bookService.getBookById(bookId);
 		model.addAttribute("book", bookById);
 		return "book";
+	}
+	
+	//도서등록
+	@GetMapping("/add")
+	public String requestAddBookForm(@ModelAttribute("NewBook") Book book) {
+		return "addBook";
+	}
+	
+	@PostMapping("/add")
+	public String submitAddNewBook(@ModelAttribute("NewBook") Book book) {
+		bookService.setNewBook(book);
+		//신규 도서 정보를 저장하려고 서비스 객체의 setNewBook() 메서드를 호출
+		return"redirect:/books";
+		//URL을 강제로 /books로 이동시켜 @RequestMapping("/books")에 매핑
+	}
+	
+	//도서 등록 페이지 제목 출력
+	@ModelAttribute
+	public void addAttributes(Model model) {
+		model.addAttribute("addTitle", "신규 도서 등록");
 	}
 
 }

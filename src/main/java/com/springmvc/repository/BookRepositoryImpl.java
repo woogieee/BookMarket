@@ -115,5 +115,10 @@ private List<Book> listOfBooks = new ArrayList<Book>();
 			throw new IllegalArgumentException("도서 ID가 " + bookId + "인 해당 도서를 찾을 수 없습니다.");
 		return bookInfo;
 	}
+	
+	//신규 도서 정보 저장
+	public void setNewBook(Book book) {
+		listOfBooks.add(book);
+	}
 
 }

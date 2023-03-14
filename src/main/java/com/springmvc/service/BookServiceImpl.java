@@ -39,5 +39,11 @@ public class BookServiceImpl implements BookService {
 		
 		return bookById;
 	}
+	
+	//신규 도서 정보 저장
+	public void setNewBook(Book book) {
+		bookRepository.setNewBook(book);
+		//setNewBook 메서드 호출
+	}
 
 }
