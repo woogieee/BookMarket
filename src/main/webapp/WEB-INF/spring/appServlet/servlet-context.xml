@@ -23,6 +23,9 @@
 	
 	<context:component-scan base-package="com.springmvc.*" />
 	
-	
+	<!-- File Upload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10240000"/>		<!-- 업로드할 파일 최대크기 -->
+	</beans:bean>
 	
 </beans:beans>
