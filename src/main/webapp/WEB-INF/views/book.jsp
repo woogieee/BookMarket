@@ -24,6 +24,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
+			<!--  -->
+			<img src="<c:url value="/resources/images/${book.bookId}.png"/>" style="width:100%"/>
+			<!-- 
 				<c:choose>
 					<c:when test="${book.getBookImage() == null}">
 						<img src="<c:url value="C:\\upload\\${book.getBookId()}.png"/>" style="width: 100%"/>
@@ -32,6 +35,7 @@
 						<img src="<c:url value="C:\\upload\\${book.getBookImage().getOriginalFilename()}"/>" style="width: 100%"/>
 					</c:otherwise>
 				</c:choose>
+			-->
 			</div>
 			<div class="col-md-8">
 				<h3>${book.name}</h3>

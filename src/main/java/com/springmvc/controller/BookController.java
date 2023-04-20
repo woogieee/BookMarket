@@ -85,7 +85,7 @@ public class BookController {
 		
 		if(bookImage != null && !bookImage.isEmpty()) {
 			try {
-				bookImage.transferTo(saveFile);				//이미지 파일을 C:\\upload경로에 업로드
+				bookImage.transferTo(saveFile);
 			}
 			catch (Exception e) {
 				throw new RuntimeException("도서 이미지 업로드가 실패하였습니다.", e);
