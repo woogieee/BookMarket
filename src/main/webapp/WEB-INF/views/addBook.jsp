@@ -29,7 +29,7 @@
 			</form:form>
 		</div>
 		<br><br>
-		<form:form modelAttribute = "NewBook" 
+		<form:form modelAttribute="NewBook" 
 				   action="./add?${_csrf.parameterName}=${_csrf.token}"
 				   class="form-horizontal"
 				   enctype="multipart/form-data">

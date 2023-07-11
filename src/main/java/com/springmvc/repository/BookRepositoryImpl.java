@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 import com.springmvc.domain.Book;
-import com.springmvc.exception.BookIdException;
 
 @Repository
 public class BookRepositoryImpl implements BookRepository {
@@ -113,7 +112,7 @@ private List<Book> listOfBooks = new ArrayList<Book>();
 			}
 		}
 		if(bookInfo == null)
-			throw new BookIdException(bookId);	//검색한 도서 아이디가 없는경우 예외 처리 클래스 호출 BookIdException
+			throw new IllegalArgumentException("도서 ID가 " + bookId + "인 해당 도서를 찾을 수 없습니다.");
 		return bookInfo;
 	}
 	
