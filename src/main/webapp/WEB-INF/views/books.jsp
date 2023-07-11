@@ -26,9 +26,6 @@
 		<div class="row" align="center">
 			<c:forEach items="${bookList}" var="book">		<!-- JSTL의 for each구문을 이용한 반복, ${bookList}는 BookController에서 전달된 모델 데이터를 var 속성 값인 book으로 재정의 함 -->
 				<div class="col-md-4">
-					<!--  -->
-					<img src="<c:url value="/resources/images/${book.bookId}.png"/>" style="width: 60%"/>
-					<!-- 
 					<c:choose>
 						<c:when test="${book.getBookImage() == null}">
 							<img src="<c:url value="C:\\upload\\${book.getBookId()}.png"/>" style="width: 60%"/>
@@ -37,7 +34,6 @@
 							<img src="<c:url value="C:\\upload\\${book.getBookImage().getOriginalFilename()}"/>" style="width: 60%"/>
 						</c:otherwise>
 					</c:choose>
-					-->
 					<h3>${book.name}</h3>
 					<p>${book.author}
 						<br>${book.publisher} | ${book.releaseDate}</p>
