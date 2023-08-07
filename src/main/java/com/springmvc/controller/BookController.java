@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
@@ -22,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springmvc.domain.Book;
+import com.springmvc.exception.BookIdException;
+import com.springmvc.exception.CategoryException;
 import com.springmvc.service.BookService;
 
 @Controller
@@ -51,6 +56,11 @@ public class BookController {
 	@GetMapping("/{category}")
 	public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {
 		List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
+		
+		if(booksByCategory == null || booksByCategory.isEmpty()) {
+			throw new CategoryException();
+		}
+		
 		model.addAttribute("bookList", booksByCategory);
 		return "books";
 	}
@@ -109,6 +119,16 @@ public class BookController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setAllowedFields("bookId", "name", "unitPrice", "author", "description", "publisher", "category", "unitsInStock", "totalPages", "releaseDate", "condition", "bookImage");
+	}
+	
+	@ExceptionHandler(value= {BookIdException.class})	//예외 클래스 BookIdException 설정
+	public ModelAndView handleError(HttpServletRequest req, BookIdException Exception) {
+		ModelAndView mav = new ModelAndView();	//ModelAndView 클래스의 mav 인스턴스 생성
+		mav.addObject("invalidBookId", Exception.getBookId());	//도서 아이디 값 저장
+		mav.addObject("exception", Exception);		//예외 처리 클래스 BookIdException 저장
+		mav.addObject("url", req.getRequestURL() + "?" + req.getQueryString());	//요청 URL과 요청 쿼리문을 저장
+		mav.setViewName("errorBook");	//뷰 이름으로 errorBook을 설정하여 errorBook.jsp 파일 출력
+		return mav;
 	}
 
 }
